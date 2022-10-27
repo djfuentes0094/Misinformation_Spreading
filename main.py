@@ -26,6 +26,7 @@ if __name__=="__main__":
 
     total_people = 100
     users_list = {}
+    connection_list = {}
     number_of_opinions = 4
     for number_of_people in range(1, total_people+1):
         starting_friend = random.randint(1, total_people+1)
@@ -33,16 +34,25 @@ if __name__=="__main__":
         users_list[f"person{number_of_people}"] = {
             "susceptibility":round(random.random()+.01,2),
             "convincing":round(random.random()+.01,2),
-            "friends":[f"person{x}" for x in range(
-                min(starting_friend, ending_friend), 
-                max(starting_friend, ending_friend)
-                )],
+            # "friends":[f"person{x}" for x in range(
+            #     min(starting_friend, ending_friend), 
+            #     max(starting_friend, ending_friend)
+            #     )
+            # ],
             "opinions":[round(random.random(),2) for x in range(number_of_opinions)]
         }
+        connection_list[f"person{number_of_people}"] = [
+            [f"person{number_of_people}",f"person{x}"] for x in range(
+                min(starting_friend, ending_friend), 
+                max(starting_friend, ending_friend)
+                )
+            ]
     new_users_list = copy.deepcopy(users_list)
     for person, person_info in new_users_list.items():
-        for friend in person_info["friends"]:
-            ops = Operators(person_info, new_users_list[friend])
+        # for friend in person_info["friends"]:
+        for connection, connection_info in connection_list.items():
+            print(connection_info)
+            ops = Operators(person_info, new_users_list[connection_info[1]])
             ops.opinion_interaction()
     
     each_max = []
