@@ -48,6 +48,21 @@ if __name__=="__main__":
                 )
             ]
     new_users_list = copy.deepcopy(users_list)
+
+    total_news = 5
+    for news in range(1, total_news+1):
+        starting_friend = random.randint(1, total_people+1)
+        ending_friend = random.randint(1, total_people+1)
+        users_list[f"news{news}"] = {
+            "susceptibility":0,
+            "convincing":round(random.random()+0.1, 2),
+            "friends":[f"person{x}" for x in range(
+                min(starting_friend, ending_friend),
+                max(starting_friend, ending_friend)
+                )],
+            "opinions":[random.randint(1,10) for x in range(number_of_opinions)]
+        }
+
     for person, person_info in new_users_list.items():
         # for friend in person_info["friends"]:
         for connection, connection_info in connection_list.items():
